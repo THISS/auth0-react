@@ -311,6 +311,7 @@ const Auth0Provider = (opts: Auth0ProviderOptions): JSX.Element => {
     <Auth0Context.Provider
       value={{
         ...state,
+        client,
         getAccessTokenSilently,
         getAccessTokenWithPopup,
         getIdTokenClaims,

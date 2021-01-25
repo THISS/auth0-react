@@ -11,6 +11,7 @@ import {
   GetTokenWithPopupOptions,
   GetTokenSilentlyOptions,
   GetIdTokenClaimsOptions,
+  LogoutUrlOptions,
 } from '@auth0/auth0-spa-js';
 import Auth0Context, { RedirectLoginOptions } from './auth0-context';
 import { hasAuthParams, loginError, tokenError } from './utils';
@@ -307,10 +308,23 @@ const Auth0Provider = (opts: Auth0ProviderOptions): JSX.Element => {
     [client]
   );
 
+  const buildAuthorizeUrl = useCallback(
+    (options?: Auth0RedirectLoginOptions): Promise<string> =>
+      client.buildAuthorizeUrl(options),
+    [client]
+  );
+
+  const buildLogoutUrl = useCallback(
+    (options?: LogoutUrlOptions): string => client.buildLogoutUrl(options),
+    [client]
+  );
+
   return (
     <Auth0Context.Provider
       value={{
         ...state,
+        buildAuthorizeUrl,
+        buildLogoutUrl,
         getAccessTokenSilently,
         getAccessTokenWithPopup,
         getIdTokenClaims,
